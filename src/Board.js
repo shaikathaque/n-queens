@@ -79,11 +79,27 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var rows = this.rows();
+      var row = rows[rowIndex];
+      var pieceCount = row.reduce(function(a,b){return a + b;});
+
+      return pieceCount > 1;
+
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+      //get reference to all the rows
+      //execute hasRowConflictAt() on each row
+      //at each iteration, if the function returns true, return true. otherwise do nothing
+      //if true not returned at the end of iterations, return false
+      var rows = this.rows();
+
+      for (var i = 0; i < rows.length; i++) {
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
@@ -94,12 +110,34 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var rows = this.rows();
+
+      var colPieceCount = 0;
+      for (var i = 0; i < rows.length; i++) {
+        colPieceCount += rows[i][colIndex];
+      }
+
+      return colPieceCount > 1; // fixme
     },
+
+    // colIndex = 0
+
+    // [
+    //   [1,0,0],
+    //   [1,0,0],
+    //   [0,0,0]
+    // ]
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      var rows = this.rows();
+
+      for (var i = 0; i < rows.length; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -109,11 +147,37 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var rows = this.rows();
+      var startingSquare = rows[0][majorDiagonalColumnIndexAtFirstRow];
+      var nextSquare = rows[0+i][majorDiagonalColumnIndexAtFirstRow+i]
+
+      for (var i = majorDiagonalColumnIndexAtFirstRow; i < rows.length; i++) {
+        //TODO
+      }
+
+      //start a loop starting with starting square
+      //check value at next square (next row index and next column)
+      //if value is 1/not null/not undefined
+      //add it to diagonalPieceCount
+
+
       return false; // fixme
     },
 
+    // [
+    //   [0,1,0],
+    //   [0,0,1],
+    //   [0,0,0]x
+    // ]
+
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        //for each row
+        //rows[i] => row
+        //call conflictAt for every row
+      }
       return false; // fixme
     },
 
