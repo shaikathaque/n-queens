@@ -147,10 +147,10 @@
     //
     // test if a specific major diagonal on this board contains a conflict
 
-      //start a loop starting with starting square
-      //check value at next square (next row index and next column)
-      //if value is 1/not null/not undefined
-      //add it to diagonalPieceCount
+    //start a loop starting with starting square
+    //check value at next square (next row index and next column)
+    //if value is 1/not null/not undefined
+    //add it to diagonalPieceCount
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
       var rows = this.rows();
 
@@ -162,14 +162,14 @@
 
         for (var i = 1; i < rows.length; i++) {
           if (rows[i] && rows[i][columnIndex + i]) {
-          var nextSquare = rows[i][columnIndex + i];
+            var nextSquare = rows[i][columnIndex + i];
             diagPieceCount += nextSquare;
           }
         }
       }
 
       if (columnIndex < 0) {
-        var startingRow = Math.abs(columnIndex);;
+        var startingRow = Math.abs(columnIndex);
         var startingCol = 0;
 
         var startingSquare = rows[startingRow][startingCol];
@@ -205,11 +205,61 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+
+
+      var rows = this.rows();
+
+      var columnIndex = minorDiagonalColumnIndexAtFirstRow;
+
+      // case where we are given a column index that starts at row 0
+      if (columnIndex <= rows.length - 1) {
+        var startingSquare = rows[0][columnIndex];
+        var diagPieceCount = startingSquare;
+
+        for (var i = 1; i < rows.length; i++) {
+          // rows increases and column decreases
+          if (rows[i] && rows[i][columnIndex - i]) {
+            var nextSquare = rows[i][columnIndex - i];
+            diagPieceCount += nextSquare;
+          }
+        }
+      }
+
+      //case where we have to find the row index that starts at col 0
+      if (columnIndex > rows.length - 1) {
+        // adjust starting row according to pattern we found
+        var startingRow = columnIndex - (rows.length - 1);
+        // startingCol is the last col
+        var startingCol = rows.length - 1;
+
+        var startingSquare = rows[startingRow][startingCol];
+        var diagPieceCount = startingSquare;
+
+        for (var i=1; i<rows.length; i++) {
+          // row increases and col decreases
+          if(rows[startingRow + i] && rows[startingRow + i][startingCol - i]) {
+            var nextSquare = rows[startingRow + i][startingCol - i];
+            diagPieceCount += nextSquare;
+          }
+        }
+      }
+
+      return diagPieceCount > 1;
+      //return false; // fixme
+
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      var rows = this.rows();
+      var startingIndex = (rows.length * 2) - 2;
+
+      // decrement instead of increment
+      for (var i=startingIndex; i>0; i--) {
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     }
 
