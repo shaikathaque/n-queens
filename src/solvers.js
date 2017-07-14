@@ -24,7 +24,7 @@ window.findNRooksSolution = function(n) {
       // stop
       solution = board.rows().map(function(row){
         return row.slice(0);
-      })
+      });
       return;
     }
 
@@ -35,12 +35,12 @@ window.findNRooksSolution = function(n) {
       //if there is no conflict
       if (!board.hasAnyRooksConflicts()){
       // recurse into remaining problem
-      findSolution(row + 1);
+        findSolution(row + 1);
       }
       // unplace a piece
       board.togglePiece(row, i);
     }
-  }
+  };
   findSolution(0);
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
@@ -69,12 +69,12 @@ window.countNRooksSolutions = function(n) {
       //if there is no conflict
       if (!board.hasAnyRooksConflicts()){
       // recurse into remaining problem
-      findSolution(row + 1);
+        findSolution(row + 1);
       }
       // unplace a piece
       board.togglePiece(row, i);
     }
-  }
+  };
   findSolution(0);
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
@@ -96,7 +96,7 @@ window.findNQueensSolution = function(n) {
       // stop
       solution = board.rows().map(function(row){
         return row.slice(0);
-      })
+      });
       return;
     }
 
@@ -107,12 +107,12 @@ window.findNQueensSolution = function(n) {
       //if there is no conflict
       if (!board.hasAnyQueensConflicts()){
       // recurse into remaining problem
-      findSolution(row + 1);
+        findSolution(row + 1);
       }
       // unplace a piece
       board.togglePiece(row, i);
     }
-  }
+  };
   findSolution(0);
 
   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
@@ -140,12 +140,12 @@ window.countNQueensSolutions = function(n) {
       //if there is no conflict
       if (!board.hasAnyQueensConflicts()){
       // recurse into remaining problem
-      findSolution(row + 1);
+        findSolution(row + 1);
       }
       // unplace a piece
       board.togglePiece(row, i);
     }
-  }
+  };
   findSolution(0);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
